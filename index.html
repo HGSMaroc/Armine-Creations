@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armine Créations – Coffrets & Bougies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose:#f2a7b8; --rose-deep:#d97b93; --rose-pale:#fde8ed;
+      --rose-dark:#8b3a52; --gold:#c9a84c; --gold-light:#e8d08a;
+      --cream:#fdf6f0; --white:#ffffff; --dark:#2a1a20;
+      --text:#4a2d38; --muted:#9c7a85;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+    /* HEADER */
+    header{background:var(--white);border-bottom:1px solid rgba(201,168,76,.2);position:sticky;top:0;z-index:100;padding:0 2rem;}
+    .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;gap:1rem;}
+    .logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.45rem;color:var(--rose-dark);white-space:nowrap;}
+    .logo span{color:var(--gold);}
+    nav a{text-decoration:none;color:var(--text);font-size:.85rem;font-weight:600;margin:0 .9rem;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;}
+    nav a:hover{color:var(--rose-deep);}
+    .cart-btn{background:var(--rose-dark);color:white;border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;position:relative;}
+    .cart-count{position:absolute;top:-5px;right:-5px;background:var(--gold);color:white;font-size:.62rem;font-weight:700;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#fde8ed 0%,#fdf6f0 55%,#fce4ec 100%);padding:72px 2rem 56px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-70px;right:-70px;width:320px;height:320px;background:radial-gradient(circle,rgba(201,168,76,.13) 0%,transparent 70%);border-radius:50%;}
+    .hero-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:white;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 20px;border-radius:20px;margin-bottom:1.4rem;font-weight:700;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.6rem);color:var(--rose-dark);line-height:1.15;margin-bottom:.5rem;}
+    .hero h1 em{font-style:italic;color:var(--gold);}
+    .hero-ar{font-family:'Tajawal',sans-serif;font-size:1.1rem;color:var(--muted);margin-bottom:.9rem;}
+    .hero p{max-width:500px;margin:0 auto 2.4rem;font-size:.97rem;color:var(--muted);line-height:1.7;}
+    .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn-primary{background:var(--rose-dark);color:white;border:none;padding:13px 32px;border-radius:50px;font-size:.9rem;font-weight:700;cursor:pointer;letter-spacing:.05em;transition:all .25s;text-decoration:none;display:inline-block;}
+    .btn-primary:hover{background:var(--rose-deep);transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,58,82,.3);}
+    .btn-outline{background:transparent;color:var(--rose-dark);border:2px solid var(--rose-dark);padding:11px 28px;border-radius:50px;font-size:.9rem;font-weight:700;cursor:pointer;letter-spacing:.05em;transition:all .25s;text-decoration:none;display:inline-block;}
+    .btn-outline:hover{background:var(--rose-pale);transform:translateY(-2px);}
+
+    /* FEATURES BAR */
+    .features-bar{background:var(--rose-dark);color:white;padding:13px 2rem;}
+    .features-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-around;flex-wrap:wrap;gap:.6rem;}
+    .feature-item{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:500;}
+
+    /* SECTION TITLE */
+    .section-title{text-align:center;margin-bottom:2.8rem;}
+    .section-title .label{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.5rem;}
+    .section-title h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.3rem);color:var(--rose-dark);}
+    .section-title p{color:var(--muted);margin-top:.4rem;font-size:.93rem;}
+    .divider{width:56px;height:2px;background:linear-gradient(90deg,var(--gold),var(--rose));margin:.7rem auto 0;border-radius:2px;}
+
+    /* PRODUCTS */
+    .products-section{padding:64px 2rem;max-width:1200px;margin:0 auto;}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:2rem;}
+
+    /* CARD */
+    .card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(139,58,82,.08);transition:transform .3s,box-shadow .3s;position:relative;cursor:pointer;}
+    .card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(139,58,82,.17);}
+    .card-img-wrap{overflow:hidden;position:relative;}
+    .card-img{width:100%;height:260px;object-fit:cover;display:block;transition:transform .5s;}
+    .card:hover .card-img{transform:scale(1.04);}
+    .card-badge{position:absolute;top:12px;left:12px;background:var(--gold);color:white;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+    .card-body{padding:1.2rem 1.4rem 1.4rem;}
+    .card-occasion{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep);font-weight:700;margin-bottom:.3rem;}
+    .card-title{font-family:'Playfair Display',serif;font-size:1.12rem;color:var(--rose-dark);margin-bottom:.2rem;}
+    .card-title-ar{font-family:'Tajawal',sans-serif;font-size:.88rem;color:var(--muted);direction:rtl;margin-bottom:.6rem;}
+    .card-desc{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+    .price{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--rose-dark);white-space:nowrap;}
+    .price span{font-size:.72rem;font-family:'Tajawal',sans-serif;font-weight:400;color:var(--muted);}
+    .add-to-cart{background:var(--rose-dark);color:white;border:none;border-radius:50px;padding:9px 18px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+    .add-to-cart:hover{background:var(--rose-deep);transform:scale(1.05);}
+
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(42,26,32,.55);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:1rem;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal{background:white;border-radius:24px;max-width:780px;width:100%;max-height:90vh;overflow-y:auto;transform:scale(.94) translateY(20px);transition:transform .3s;box-shadow:0 24px 80px rgba(0,0,0,.22);}
+    .modal-overlay.open .modal{transform:scale(1) translateY(0);}
+    .modal-img-wrap{position:relative;}
+    .modal-img{width:100%;height:300px;object-fit:cover;border-radius:24px 24px 0 0;display:block;}
+    .modal-close-btn{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .modal-close-btn:hover{background:white;color:var(--rose-dark);}
+    .modal-body{padding:1.8rem 2rem 2rem;}
+    .modal-occasion{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-deep);font-weight:700;margin-bottom:.4rem;}
+    .modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--rose-dark);margin-bottom:.2rem;}
+    .modal-title-ar{font-family:'Tajawal',sans-serif;font-size:1rem;color:var(--muted);direction:rtl;margin-bottom:.9rem;}
+    .modal-desc{font-size:.9rem;color:var(--text);line-height:1.7;margin-bottom:1.2rem;}
+
+    /* INCLUDES */
+    .includes-title{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.6rem;}
+    .includes-list{list-style:none;margin-bottom:1.5rem;}
+    .includes-list li{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;color:var(--text);padding:5px 0;border-bottom:1px dashed rgba(201,168,76,.25);}
+    .includes-list li:last-child{border-bottom:none;}
+    .includes-list li::before{content:'✦';color:var(--gold);font-size:.7rem;margin-top:2px;flex-shrink:0;}
+
+    /* CUSTOM FORM */
+    .custom-section{background:var(--rose-pale);border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;}
+    .custom-section h4{font-family:'Playfair Display',serif;font-size:1rem;color:var(--rose-dark);margin-bottom:1rem;}
+    .form-group{margin-bottom:1rem;}
+    .form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:.4rem;letter-spacing:.04em;}
+    .form-group select,.form-group input,.form-group textarea{width:100%;padding:10px 14px;border:1.5px solid rgba(139,58,82,.2);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:.88rem;color:var(--text);background:white;transition:border-color .2s;outline:none;}
+    .form-group select:focus,.form-group input:focus,.form-group textarea:focus{border-color:var(--rose-deep);}
+    .form-group textarea{resize:vertical;min-height:70px;}
+    .color-swatches{display:flex;gap:.8rem;flex-wrap:wrap;}
+    .swatch-wrap{display:flex;flex-direction:column;align-items:center;}
+    .swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s;}
+    .swatch.selected{border-color:var(--rose-dark);box-shadow:0 0 0 2px white inset;}
+    .swatch-label{font-size:.72rem;color:var(--muted);text-align:center;margin-top:3px;width:44px;}
+    .qty-wrap{display:flex;align-items:center;gap:.7rem;}
+    .qty-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--rose-dark);background:none;color:var(--rose-dark);font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .qty-btn:hover{background:var(--rose-dark);color:white;}
+    .qty-val{font-size:1rem;font-weight:700;color:var(--rose-dark);min-width:26px;text-align:center;}
+
+    .modal-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.2rem;border-top:1px solid var(--rose-pale);flex-wrap:wrap;}
+    .modal-price{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--rose-dark);}
+    .modal-price small{font-size:.78rem;font-family:'Tajawal',sans-serif;font-weight:400;color:var(--muted);}
+    .modal-actions{display:flex;gap:.8rem;flex-wrap:wrap;}
+
+    /* CART PANEL */
+    .cart-overlay{position:fixed;inset:0;background:rgba(42,26,32,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
+    .cart-overlay.open{opacity:1;pointer-events:all;}
+    .cart-panel{position:fixed;top:0;right:-440px;width:420px;max-width:100vw;height:100vh;background:white;z-index:300;transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,.15);}
+    .cart-panel.open{right:0;}
+    .cart-header{padding:1.4rem 1.5rem 1rem;border-bottom:1px solid var(--rose-pale);display:flex;justify-content:space-between;align-items:center;}
+    .cart-header h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--rose-dark);}
+    .close-btn{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);transition:color .2s;}
+    .close-btn:hover{color:var(--rose-dark);}
+    .cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem;}
+    .cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
+    .cart-empty .icon{font-size:3rem;margin-bottom:1rem;}
+    .cart-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--rose-pale);}
+    .cart-item img{width:62px;height:62px;object-fit:cover;border-radius:10px;flex-shrink:0;}
+    .cart-item-info{flex:1;}
+    .cart-item-name{font-size:.88rem;font-weight:700;color:var(--rose-dark);margin-bottom:3px;}
+    .cart-item-custom{font-size:.74rem;color:var(--muted);line-height:1.55;}
+    .cart-item-price{font-size:.9rem;color:var(--gold);font-weight:700;margin-top:4px;}
+    .cart-item-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;transition:color .2s;flex-shrink:0;}
+    .cart-item-remove:hover{color:var(--rose-deep);}
+    .cart-footer{padding:1.2rem 1.5rem;border-top:1px solid var(--rose-pale);}
+    .cart-total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;color:var(--rose-dark);margin-bottom:.4rem;}
+    .cart-note{font-size:.78rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6;}
+    .whatsapp-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#25d366;color:white;border:none;border-radius:50px;width:100%;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .25s;text-decoration:none;}
+    .whatsapp-btn:hover{background:#1ebe5d;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.35);}
+
+    /* FLOATING WA */
+    .wa-float{position:fixed;bottom:26px;right:26px;z-index:150;background:#25d366;color:white;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 6px 24px rgba(37,211,102,.5);text-decoration:none;transition:transform .25s;}
+    .wa-float:hover{transform:scale(1.1);}
+
+    /* NOTIF */
+    .notif{position:fixed;bottom:90px;right:26px;background:var(--rose-dark);color:white;padding:12px 20px;border-radius:12px;font-size:.87rem;font-weight:600;z-index:400;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;}
+    .notif.show{opacity:1;transform:translateY(0);}
+
+    /* FOOTER */
+    footer{background:var(--dark);color:rgba(255,255,255,.7);text-align:center;padding:2.5rem 2rem;}
+    footer .f-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:var(--rose);display:block;margin-bottom:.6rem;}
+    footer p{font-size:.82rem;line-height:1.9;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+
+    @media(max-width:768px){
+      nav{display:none;}
+      .modal{max-height:95vh;border-radius:18px;}
+      .modal-body{padding:1.4rem;}
+      .modal-footer{flex-direction:column;align-items:stretch;}
+      .modal-actions{justify-content:stretch;}
+      .modal-actions .btn-primary,.modal-actions .btn-outline{flex:1;text-align:center;}
+      .cart-panel{width:100vw;}
+      .features-inner{flex-direction:column;align-items:center;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">armine <span>créations</span></div>
+    <nav>
+      <a href="#products">Boutique</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-btn" onclick="openCart()">
+      🛍️<span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-badge">✦ Livraison Gratuite · توصيل مجاني ✦</span>
+  <h1>Des coffrets <em>uniques</em><br>pour chaque moment</h1>
+  <p class="hero-ar">هدايا مميزة لكل مناسبة</p>
+  <p>Bougies artisanales, coffrets personnalisés &amp; créations sur mesure pour toutes vos occasions.</p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Découvrir la boutique</a>
+    <a href="https://wa.me/212628282127" target="_blank" class="btn-outline">📱 WhatsApp 0628282127</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features-bar">
+  <div class="features-inner">
+    <div class="feature-item">🚚 Livraison gratuite · توصيل مجاني</div>
+    <div class="feature-item">💳 Paiement à la livraison · الدفع عند الاستلام</div>
+    <div class="feature-item">✍️ Personnalisation disponible</div>
+    <div class="feature-item">📱 Commande via WhatsApp · 0628282127</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-title">
+    <span class="label">Notre collection</span>
+    <h2>Coffrets & Bougies</h2>
+    <p>Cliquez sur un produit pour le personnaliser et commander</p>
+    <div class="divider"></div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <span class="f-logo">armine créations</span>
+  <p>
+    📍 Maroc &nbsp;|&nbsp; 📱 <a href="https://wa.me/212628282127">0628 28 21 27</a><br>
+    📦 Livraison gratuite · Paiement à la livraison · الدفع عند الاستلام<br>
+    © 2026 Armine Créations – Tous droits réservés
+  </p>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/212628282127" class="wa-float" target="_blank">💬</a>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-img-wrap">
+      <img id="modalImg" src="" alt="" class="modal-img"/>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-occasion" id="modalOccasion"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-title-ar" id="modalTitleAr"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div id="modalIncludes"></div>
+      <div id="modalCustom"></div>
+      <div class="modal-footer">
+        <div>
+          <div class="modal-price" id="modalPrice"></div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:3px">Paiement à la livraison · الدفع عند الاستلام</div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-outline" onclick="closeModal()">Retour</button>
+          <button class="btn-primary" onclick="addFromModal()">🛍️ Ajouter au panier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛍️ Mon Panier</h3>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="icon">🌸</div><p>Votre panier est vide</p></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">0 MAD</span></div>
+    <p class="cart-note">✅ Livraison gratuite · Paiement à la livraison<br>Votre commande sera confirmée via WhatsApp</p>
+    <a id="waConfirmBtn" href="#" class="whatsapp-btn" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Confirmer via WhatsApp
+    </a>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const products = [
+  {
+    id:'coffret-sita',name:'Coffret ست الحبايب',nameAr:'ست الحبايب',
+    occasion:'Toutes occasions',
+    desc:'Un coffret luxueux pensé pour sublimer celles que vous aimez. Élégant, parfumé et entièrement personnalisable.',
+    price:149,badge:'Best-seller',img:'Capture3.PNG',
+    includes:[
+      'Coffret en cuir rose pâle ou beige',
+      'Brûleur de parfums et/ou fondants',
+      'Bougie fleurie parfumée au choix',
+      'Bougie chauffe-plat',
+      'Fondants cœurs parfumés pour le brûleur',
+      'Carte de souhait personnalisable au choix'
+    ],
+    customFields:[
+      {type:'color',label:'Couleur du coffret',id:'coffret_color',options:[
+        {label:'Rose pâle',value:'rose-pale',hex:'#f8c8d4'},
+        {label:'Beige',value:'beige',hex:'#e8d5b7'}
+      ]},
+      {type:'select',label:'Parfum de la bougie fleurie',id:'bougie_type',options:['Rose','Pivoine','Jasmin','Lavande','Vanille','Oud & Rose']},
+      {type:'select',label:'Parfum des fondants cœurs',id:'fondant_parfum',options:['Rose & Oud','Vanille & Caramel','Jasmin & Musc','Lavande & Miel','Fruits rouges']},
+      {type:'text',label:'Message sur la carte de souhait',id:'carte_msg',placeholder:'Ex: Joyeux anniversaire ma chérie 🌸'}
+    ]
+  },
+  {
+    id:'coffret-noel',name:'Coffret Joyeux Noël',nameAr:'هدية رأس السنة',
+    occasion:'Noël & Nouvel An',
+    desc:'Sac givré "Joyeux Noël et Bonne Année" avec décors de renne, ruban rouge et surprises parfumées.',
+    price:199,badge:'Édition limitée',img:'Capture2.PNG',
+    customFields:[
+      {type:'select',label:'Contenu du coffret',id:'noel_contenu',options:['Bougies & décors','Bougie + fondants','Coffret surprise']},
+      {type:'text',label:'Prénom destinataire',id:'noel_prenom',placeholder:'Ex: Sarah'},
+      {type:'text',label:'Message personnalisé',id:'noel_msg',placeholder:'Ex: Joyeuses fêtes ! ✨'}
+    ]
+  },
+  {
+    id:'coffret-valentine',name:'Coffret Saint-Valentin',nameAr:'هدية الحب',
+    occasion:'Saint-Valentin · Anniversaire de mariage',
+    desc:'Boîte cœur blanche avec bougies roses parfumées, pétales rouges et photo personnalisée avec message d\'amour.',
+    price:199,badge:'Romantique',img:'Capture.PNG',
+    customFields:[
+      {type:'color',label:'Couleur des bougies roses',id:'rose_color',options:[
+        {label:'Rouge & blanc',value:'rouge-blanc',hex:'#c0392b'},
+        {label:'Rose',value:'rose',hex:'#e91e8c'}
+      ]},
+      {type:'text',label:'Texte sur la carte / photo',id:'valentine_txt',placeholder:'Ex: Happy Wedding Anniversary 💕'},
+      {type:'text',label:'Prénom destinataire',id:'valentine_dest',placeholder:'Ex: Nadia'}
+    ]
+  },
+  {
+    id:'coffret-ramadan',name:'Coffret Ramadan Kareem',nameAr:'رمضان كريم',
+    occasion:'Ramadan',
+    desc:'Veilleuse lune 3D, lanternes dorées, pochon tissu & sac Ramadan Kareem. Un cadeau raffiné pour le mois sacré.',
+    price:199,badge:'Ramadan',img:'WhatsApp_Image_2026-03-29_at_23_31_13__2_.jpeg',
+    customFields:[
+      {type:'color',label:'Couleur lanterne',id:'lanterne_color',options:[
+        {label:'Noir & or',value:'noir',hex:'#2c2c2c'},
+        {label:'Blanc & or',value:'blanc',hex:'#f5f5f0'}
+      ]},
+      {type:'select',label:'Couleur pochon',id:'pochon',options:['Beige taupe','Blanc','Or champagne','Gris perle']},
+      {type:'text',label:'Prénom destinataire',id:'ram_prenom',placeholder:'Ex: Khalid'}
+    ]
+  },
+  {
+    id:'coffret-women',name:'Coffret 8 Mars',nameAr:'عيد المرأة',
+    occasion:'Journée Internationale de la Femme',
+    desc:'Boîte ronde avec bougies tulipes parfumées rose & crème. Sac cadeau 8 Mars en rose et or.',
+    price:199,badge:'8 Mars',img:'WhatsApp_Image_2026-03-29_at_23_31_13.jpeg',
+    customFields:[
+      {type:'select',label:'Parfum des tulipes',id:'tulipe_parfum',options:['Rose & Jasmin','Vanille douce','Fleurs blanches','Fruits rouges','Pivoine & Musc']},
+      {type:'text',label:'Prénom destinataire',id:'women_prenom',placeholder:'Ex: Iman'},
+      {type:'text',label:'Message carte',id:'women_msg',placeholder:'Ex: Bonne fête ma belle 🌷'}
+    ]
+  },
+  {
+    id:'coffret-diffuseur',name:'Coffret Diffuseur Floral',nameAr:'طقم العطر الزهري',
+    occasion:'Anniversaire · Mariage · Cadeau',
+    desc:'Diffuseur céramique rose, huile essentielle parfumée & fleur décorative en céramique. Sac fleurs de cerisier inclus.',
+    price:199,badge:'Nouveau',img:'WhatsApp_Image_2026-03-29_at_23_31_12__1_.jpeg',
+    customFields:[
+      {type:'select',label:'Parfum huile essentielle',id:'huile_parfum',options:['Rose & Oud','Fleur de cerisier','Jasmin & Musc','Lavande & Vanille','Oud premium']},
+      {type:'text',label:'Prénom destinataire',id:'diff_prenom',placeholder:'Ex: Loubna'},
+      {type:'text',label:'Message carte',id:'diff_msg',placeholder:'Ex: Avec tout mon amour 💐'}
+    ]
+  },
+  {
+    id:'coffret-mama',name:'Coffret Mama Personnalisé',nameAr:'أمي جنة قلبي',
+    occasion:'Fête des Mères · Cadeau Maman',
+    desc:'Coffret rond rose avec mug prénom personnalisé & bougie parfumée. Inscription "أمي جنة قلبي" incluse.',
+    price:199,badge:'Personnalisé',img:'WhatsApp_Image_2026-03-29_at_23_31_12.jpeg',
+    customFields:[
+      {type:'text',label:'Prénom sur le mug (arabe ou latin)',id:'mug_prenom',placeholder:'Ex: صفاء  ou  Fatima'},
+      {type:'color',label:'Couleur boîte',id:'mama_color',options:[
+        {label:'Rose pâle',value:'rose-pale',hex:'#f8c8d4'},
+        {label:'Rose vif',value:'rose-vif',hex:'#e91e8c'}
+      ]},
+      {type:'select',label:'Parfum bougie',id:'mama_parfum',options:['Rose & Musc','Vanille & Caramel','Jasmin & Oud','Fleurs blanches','Lavande']},
+      {type:'text',label:'Message carte',id:'mama_msg',placeholder:'Ex: أمي حبيبتي، كل سنة وأنت بخير 🌸'}
+    ]
+  }
+];
+
+// RENDER CARDS
+function renderProducts(){
+  document.getElementById('productsGrid').innerHTML = products.map(p=>`
+    <div class="card" onclick="openModal('${p.id}')">
+      <div class="card-img-wrap">
+        <img class="card-img" src="${p.img}" alt="${p.name}" loading="lazy"/>
+        ${p.badge?`<span class="card-badge">${p.badge}</span>`:''}
+      </div>
+      <div class="card-body">
+        <div class="card-occasion">${p.occasion}</div>
+        <div class="card-title">${p.name}</div>
+        <div class="card-title-ar">${p.nameAr}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-footer">
+          <div class="price">${p.price} <span>MAD</span></div>
+          <button class="add-to-cart" onclick="event.stopPropagation();openModal('${p.id}')">Personnaliser →</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// MODAL
+let currentProduct=null, selectedColors={}, currentQty=1;
+
+function openModal(id){
+  currentProduct=products.find(p=>p.id===id);
+  const p=currentProduct; selectedColors={}; currentQty=1;
+  document.getElementById('modalImg').src=p.img;
+  document.getElementById('modalOccasion').textContent=p.occasion;
+  document.getElementById('modalTitle').textContent=p.name;
+  document.getElementById('modalTitleAr').textContent=p.nameAr;
+  document.getElementById('modalDesc').textContent=p.desc;
+  document.getElementById('modalPrice').innerHTML=`${p.price} MAD <small>· Livraison gratuite</small>`;
+
+  document.getElementById('modalIncludes').innerHTML=p.includes?`
+    <p class="includes-title">Ce coffret comprend :</p>
+    <ul class="includes-list">${p.includes.map(i=>`<li>${i}</li>`).join('')}</ul>
+  `:'';
+
+  let html=`<div class="custom-section"><h4>✦ Personnalisez votre commande</h4>`;
+  p.customFields.forEach(f=>{
+    html+=`<div class="form-group"><label>${f.label}</label>`;
+    if(f.type==='color'){
+      html+=`<div class="color-swatches">`;
+      f.options.forEach((opt,i)=>{
+        if(i===0) selectedColors[f.id]=opt.value;
+        html+=`<div class="swatch-wrap">
+          <div class="swatch${i===0?' selected':''}" style="background:${opt.hex}"
+            data-field="${f.id}" data-value="${opt.value}"
+            onclick="selectSwatch(this,'${f.id}')" title="${opt.label}"></div>
+          <div class="swatch-label">${opt.label}</div>
+        </div>`;
+      });
+      html+=`</div>`;
+    } else if(f.type==='select'){
+      html+=`<select id="${f.id}">${f.options.map(o=>`<option>${o}</option>`).join('')}</select>`;
+    } else {
+      html+=`<input type="text" id="${f.id}" placeholder="${f.placeholder||''}"/>`;
+    }
+    html+=`</div>`;
+  });
+  html+=`<div class="form-group"><label>Quantité</label>
+    <div class="qty-wrap">
+      <button class="qty-btn" onclick="changeQty(-1)">−</button>
+      <span class="qty-val" id="qtyVal">1</span>
+      <button class="qty-btn" onclick="changeQty(1)">+</button>
+    </div></div></div>`;
+  document.getElementById('modalCustom').innerHTML=html;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  // scroll modal to top
+  document.getElementById('modal').scrollTop=0;
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+
+function selectSwatch(el,fieldId){
+  document.querySelectorAll(`.swatch[data-field="${fieldId}"]`).forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColors[fieldId]=el.dataset.value;
+}
+
+function changeQty(d){
+  currentQty=Math.max(1,currentQty+d);
+  document.getElementById('qtyVal').textContent=currentQty;
+}
+
+function addFromModal(){
+  if(!currentProduct)return;
+  const p=currentProduct;
+  let custom=[];
+  p.customFields.forEach(f=>{
+    if(f.type==='color'){
+      const opt=f.options.find(o=>o.value===selectedColors[f.id]);
+      if(opt) custom.push(`${f.label}: ${opt.label}`);
+    } else {
+      const el=document.getElementById(f.id);
+      if(el&&el.value.trim()) custom.push(`${f.label}: ${el.value.trim()}`);
+    }
+  });
+  cart.push({id:p.id+'_'+Date.now(),productId:p.id,name:p.name,nameAr:p.nameAr,price:p.price,qty:currentQty,img:p.img,custom});
+  updateCartUI();
+  closeModal();
+  showNotif(`✅ ${p.name} ajouté au panier !`);
+  setTimeout(openCart,300);
+}
+
+// CART
+let cart=[];
+function removeFromCart(id){cart=cart.filter(i=>i.id!==id);updateCartUI();}
+
+function updateCartUI(){
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  const itemsEl=document.getElementById('cartItems'),footerEl=document.getElementById('cartFooter');
+  if(!cart.length){
+    itemsEl.innerHTML=`<div class="cart-empty"><div class="icon">🌸</div><p>Votre panier est vide</p></div>`;
+    footerEl.style.display='none';return;
+  }
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  itemsEl.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <img src="${item.img}" alt="${item.name}"/>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}${item.qty>1?` × ${item.qty}`:''}</div>
+        <div class="cart-item-custom">${item.custom.join('<br>')}</div>
+        <div class="cart-item-price">${item.price*item.qty} MAD</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">🗑️</button>
+    </div>
+  `).join('');
+  document.getElementById('cartTotal').textContent=total+' MAD';
+  footerEl.style.display='block';
+
+  let msg=`Bonjour Armine Créations ! 🌸\nJe souhaite commander :\n\n`;
+  cart.forEach(i=>{
+    msg+=`• ${i.name} (${i.nameAr}) × ${i.qty} — ${i.price*i.qty} MAD\n`;
+    if(i.custom.length) msg+=`  ` + i.custom.join('\n  ') + `\n`;
+    msg+=`\n`;
+  });
+  msg+=`TOTAL : ${total} MAD\n📦 Livraison gratuite · Paiement à la livraison\nMerci ! 🌸`;
+  document.getElementById('waConfirmBtn').href=`https://wa.me/212628282127?text=${encodeURIComponent(msg)}`;
+}
+
+function openCart(){document.getElementById('cartPanel').classList.add('open');document.getElementById('cartOverlay').classList.add('open');}
+function closeCart(){document.getElementById('cartPanel').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');}
+
+function showNotif(msg){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+renderProducts();
+</script>
+</body>
+</html>
